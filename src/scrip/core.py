@@ -4,6 +4,7 @@ import base64
 import os
 import stat
 from pathlib import Path
+from typing import Optional
 
 # --- Constants for Delimiters ---
 BEGIN_FILE_PREFIX = "--- BEGIN FILE: "
@@ -66,7 +67,7 @@ def flatten_directory(directory_path: str, output_file: str):
 
     print(f"Successfully flattened '{directory_path}' to '{output_file}'")
 
-def _parse_begin_file_line(line: str) -> tuple[str | None, bool]:
+def _parse_begin_file_line(line: str) -> tuple[Optional[str], bool]:
     """Parses a BEGIN FILE line. Returns (path_str, is_binary) or (None, False)."""
     if line.startswith(BEGIN_FILE_PREFIX) and line.endswith(BEGIN_FILE_SUFFIX):
         path_part = line[len(BEGIN_FILE_PREFIX):-len(BEGIN_FILE_SUFFIX)]
@@ -79,14 +80,14 @@ def _parse_begin_file_line(line: str) -> tuple[str | None, bool]:
             return path_str, False
     return None, False
 
-def _parse_empty_dir_line(line: str) -> str | None:
+def _parse_empty_dir_line(line: str) -> Optional[str]:
     """Parses an EMPTY DIR line. Returns path_str or None."""
     if line.startswith(EMPTY_DIR_PREFIX) and line.endswith(EMPTY_DIR_SUFFIX):
         path_str = line[len(EMPTY_DIR_PREFIX):-len(EMPTY_DIR_SUFFIX)]
         return path_str
     return None
 
-def _parse_end_file_line(line: str) -> tuple[str | None, bool]:
+def _parse_end_file_line(line: str) -> tuple[Optional[str], bool]:
     """Parses an END FILE line. Returns (path_str, is_binary) or (None, False)."""
     # Similar logic to begin, checking the END prefix/suffix
     if line.startswith(END_FILE_PREFIX) and line.endswith(END_FILE_SUFFIX):
