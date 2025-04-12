@@ -23,11 +23,12 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: Install Poetry
-      uses: snok/install-poetry@v1
-      # run: pipx install poetry # Alternative if snok action has issues
+      # uses: snok/install-poetry@v1 # Switched to pipx method
+      run: pipx install poetry
 
     - name: Install dependencies
-      run: poetry install --no-interaction --no-ansi
+      # Add -vvv for more verbose output if install fails
+      run: poetry install -vvv --no-interaction --no-ansi
 
     - name: Run tests
       run: poetry run pytest 
