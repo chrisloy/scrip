@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "scrip"
+version = "0.1.0"
+description = "A simple command-line tool for flattening directory structures into a single text file, and restoring them."
+authors = ["chrisloy <chrisloyuk@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/chrisloy/scrip"
+repository = "https://github.com/chrisloy/scrip"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+
+[tool.poetry.scripts]
+scrip = "scrip.main:scrip_cli"
+unscrip = "scrip.main:unscrip_cli"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
