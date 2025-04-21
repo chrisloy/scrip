@@ -40,9 +40,9 @@ def verify_restored_files(base_dir: Path, structure: dict):
             verify_restored_files(path, content)
         elif isinstance(content, str):
             assert path.is_file()
-            # Ensure comparison includes a trailing newline, matching flatten behavior
-            expected_content = content if content.endswith('\n') else content + '\n'
-            assert path.read_text('utf-8') == expected_content
+            # With the new implementation, we preserve file content exactly
+            # without adding trailing newlines, so the comparison should be exact
+            assert path.read_text('utf-8') == content
         elif content is None:
             assert path.is_dir()
             assert not any(path.iterdir()), f"Directory not empty: {path}"
